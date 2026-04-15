@@ -56,11 +56,11 @@ const channels = [
   <!-- Contact Section -->
   <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <div class="mx-auto max-w-5xl px-6">
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-stretch">
 
         <!-- Left column: contact form -->
-        <div class="lg:col-span-3" data-reveal>
-          <Card padding="lg">
+        <div class="lg:col-span-3 h-full" data-reveal>
+          <Card padding="lg" class="h-full flex flex-col justify-center">
             <h2 class="font-display text-xl font-bold text-foreground mb-6">Send a message</h2>
             <ContactForm />
           </Card>
