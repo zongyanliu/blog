@@ -89,7 +89,7 @@ if (includeProfessionalServiceSchema) {
     <ClientRouter />
 
     <!-- Dynamic favicon: syncs letter (first letter of site name) and color (brand-500) with active theme -->
-    <script define:vars={{ _faviconLetter: siteConfig.name.charAt(0).toUpperCase() }}>
+    <script is:inline define:vars={{ _faviconLetter: siteConfig.name.charAt(0).toUpperCase() }}>
       (function () {
         const LETTER = _faviconLetter;
 
