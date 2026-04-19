@@ -1,16 +1,12 @@
-import { defineConfig, envField } from 'astro/config'; // 加入這行
-import cloudflare from '@astrojs/cloudflare';
+import { defineConfig, envField } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 
-// 移除了 Vercel 與 Netlify 的相關 import，保持乾淨
-
 export default defineConfig({
-  output: 'server', // 加上這行，告訴 Astro 我們要伺服器渲染 (SSR)
-  adapter: cloudflare(),
+  // 注意：這裡移除了 adapter 和 output，讓 Astro 回歸最穩定的預設靜態模式
   site: process.env.SITE_URL || 'https://example.com',
 
   env: {
