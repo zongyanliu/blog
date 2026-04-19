@@ -10,7 +10,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   // 關鍵設定 1：使用混合模式。
   // 這讓你的網站大多數頁面維持靜態，只有 API 路由是動態的。
-  output: 'hybrid',
+  output: 'static',
 
   // 關鍵設定 2：安裝 Cloudflare 適配器
   adapter: cloudflare(),
