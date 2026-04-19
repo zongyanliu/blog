@@ -1,16 +1,16 @@
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig, envField } from 'astro/config'; // 加入這行
+import cloudflare from '@astrojs/cloudflare';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
-import vercel from '@astrojs/vercel';
-import netlify from '@astrojs/netlify';
 
-const isNetlify = process.env.DEPLOY_TARGET === 'netlify';
+// 移除了 Vercel 與 Netlify 的相關 import，保持乾淨
 
 export default defineConfig({
-  adapter: isNetlify ? netlify() : vercel(),
+  output: 'server', // 加上這行，告訴 Astro 我們要伺服器渲染 (SSR)
+  adapter: cloudflare(),
   site: process.env.SITE_URL || 'https://example.com',
 
   env: {
@@ -54,5 +54,4 @@ export default defineConfig({
       wrap: true,
     },
   },
-
 });
