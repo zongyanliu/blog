@@ -25,9 +25,8 @@ export default defineConfig({
       PUBLIC_GTM_ID: envField.string({ context: 'client', access: 'public', optional: true }),
       
       // 聯絡表單必備金鑰，需在 Cloudflare Pages 後台設定變數
-      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: false }),
-      RESEND_FROM_EMAIL: envField.string({ context: 'server', access: 'secret', optional: false }),
-      
+      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      RESEND_FROM_EMAIL: envField.string({ context: 'server', access: 'secret', optional: true }),      
       NEWSLETTER_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       GOOGLE_SITE_VERIFICATION: envField.string({ context: 'server', access: 'public', optional: true }),
       BING_SITE_VERIFICATION: envField.string({ context: 'server', access: 'public', optional: true }),
