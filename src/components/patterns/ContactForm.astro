@@ -90,18 +90,26 @@ const {
 
       try {
         const formData = new FormData(form);
-        const name = formData.get('name') || '';
-        const subject = formData.get('subject') || 'Contact from Website';
-        const msg = formData.get('message') || '';
-        const body = `Hi Zong-Yan,\n\n${msg}\n\nFrom,\n${name}`;
-        
-        window.location.href = `mailto:zl843@cornell.edu?subject=${encodeURIComponent(subject as string)}&body=${encodeURIComponent(body)}`;
-        
-        message.textContent = successMessage;
-        message.className = 'text-sm text-success';
-        form.reset();
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          message.textContent = successMessage;
+          message.className = 'text-sm text-success';
+          form.reset();
+        } else {
+          const errors = data.errors
+            ? Object.values(data.errors).flat().join(', ')
+            : 'Something went wrong';
+          message.textContent = errors as string;
+          message.className = 'text-sm text-destructive';
+        }
       } catch {
-        message.textContent = 'Failed to open email client.';
+        message.textContent = 'Failed to send message. Please try again.';
         message.className = 'text-sm text-destructive';
       } finally {
         button.disabled = false;
