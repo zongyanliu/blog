@@ -1,19 +1,21 @@
 import { defineConfig, envField } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
+import netlify from '@astrojs/netlify';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 
+const deployTarget = process.env.DEPLOY_TARGET ?? (process.env.NETLIFY ? 'netlify' : 'cloudflare');
+const adapter = deployTarget === 'netlify' ? netlify() : cloudflare();
+
 // https://astro.build/config
 export default defineConfig({
-  // 關鍵設定 1：使用靜態模式。
-  // Astro 已移除 'hybrid' 模式，改用 'static' 作為預設。
-  output: 'static', trailingSlash: 'never',
+  // API routes require server output in production deployments.
+  output: 'server', trailingSlash: 'never',
 
-  // 關鍵設定 2：安裝 Cloudflare 適配器
-  adapter: cloudflare(),
+  adapter,
 
   // 替換為你的實際網址
   site: 'https://blog.ecoplant.uk',

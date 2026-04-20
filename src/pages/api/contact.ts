@@ -51,7 +51,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const resend = new Resend(apiKey);
 
-    // 💡 確保使用你在 Cloudflare 設定的變數，或是你 Resend 驗證過的網域
+    // Use your deployment environment variable and a Resend-verified sender domain.
     const fromEmail = RESEND_FROM_EMAIL || 'blog@ecoplant.uk';
 
     const { error } = await resend.emails.send({
