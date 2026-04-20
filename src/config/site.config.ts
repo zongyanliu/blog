@@ -58,7 +58,7 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'AI in Biology',
+  name: 'Neural Genomes',
   description: 'Sharing knowledge on deep learning, foundation models, and modern genomics.',
   url: SITE_URL || 'https://zongyanliu.github.io/web',
   ogImage: '/og-default.svg',
@@ -84,7 +84,7 @@ export const siteConfig: SiteConfig = {
   blogImageOverlay: true,
   branding: {
     logo: {
-      alt: 'AI in Biology',
+      alt: 'Neural Genomes',
       imageUrl: '/favicon.svg',
     },
     favicon: {
