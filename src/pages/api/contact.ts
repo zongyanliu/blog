@@ -53,7 +53,9 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Send email via Resend
-    const apiKey = import.meta.env.RESEND_API_KEY;
+    // Support both Vite and Node environments
+    // @ts-ignore
+    const apiKey = import.meta.env.RESEND_API_KEY || (typeof process !== 'undefined' ? process.env.RESEND_API_KEY : null);
     if (!apiKey) {
       console.error('RESEND_API_KEY is not set');
       return new Response(

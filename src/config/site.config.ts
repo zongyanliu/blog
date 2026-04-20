@@ -63,7 +63,7 @@ export const siteConfig: SiteConfig = {
   url: SITE_URL || 'https://zongyanliu.github.io/web',
   ogImage: '/og-default.svg',
   author: 'Zong-Yan Liu',
-  email: 'zl843@cornell.edu',
+  email: 'noreply@ecoplant.uk',
   address: {
     street: '',
     city: 'Ithaca',
