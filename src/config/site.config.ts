@@ -73,13 +73,9 @@ export const siteConfig: SiteConfig = {
   },
   socialLinks: [
     'https://github.com/zongyanliu',
-    'https://twitter.com/YourTwitterHandle',
     'https://www.linkedin.com/in/zongyanliu/',
+    'https://zongyanliu.github.io/web/',
   ],
-  twitter: {
-    site: 'https://twitter.com/YourTwitterHandle',
-    creator: '@YourTwitterHandle',
-  },
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
     bing: BING_SITE_VERIFICATION,
@@ -88,7 +84,7 @@ export const siteConfig: SiteConfig = {
   blogImageOverlay: true,
   branding: {
     logo: {
-      alt: 'The AI Botanist',
+      alt: 'AI in Biology',
       imageUrl: '/favicon.svg',
     },
     favicon: {
