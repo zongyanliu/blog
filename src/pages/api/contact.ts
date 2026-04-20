@@ -4,81 +4,61 @@ import type { APIRoute } from 'astro';
 import { z } from 'astro/zod';
 import { Resend } from 'resend';
 import siteConfig from '@/config/site.config';
-import { RESEND_API_KEY } from 'astro:env/server';
+import { RESEND_API_KEY, RESEND_FROM_EMAIL } from 'astro:env/server';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100),
   email: z.email('Please enter a valid email address'),
   subject: z.string().max(200).optional(),
   message: z.string().min(10, 'Message must be at least 10 characters').max(5000),
-  honeypot: z.string().max(0), // Anti-spam: must be empty
+  honeypot: z.string().max(0),
 });
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const formData = await request.formData();
+    // 💡 優化：自動判斷是 JSON 還是 FormData
+    const contentType = request.headers.get('content-type');
+    let data: any;
 
-    const data = {
-      name: formData.get('name')?.toString() || '',
-      email: formData.get('email')?.toString() || '',
-      subject: formData.get('subject')?.toString() || '',
-      message: formData.get('message')?.toString() || '',
-      honeypot: formData.get('honeypot')?.toString() || '',
-    };
+    if (contentType?.includes('application/json')) {
+      data = await request.json();
+    } else {
+      const formData = await request.formData();
+      data = Object.fromEntries(formData.entries());
+    }
 
-    // Validate
+    // 驗證邏輯
     const result = contactSchema.safeParse(data);
-
     if (!result.success) {
-      const fieldErrors: Record<string, string[]> = {};
-      for (const error of result.error.issues) {
-        const field = error.path[0] as string;
-        if (!fieldErrors[field]) {
-          fieldErrors[field] = [];
-        }
-        fieldErrors[field].push(error.message);
-      }
-
       return new Response(
-        JSON.stringify({ success: false, errors: fieldErrors }),
+        JSON.stringify({ success: false, errors: result.error.flatten().fieldErrors }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // Honeypot check (bot detection)
+    // Bot 檢測
     if (result.data.honeypot) {
-      return new Response(JSON.stringify({ success: true }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
 
-    // Send email via Resend
-    // Send email via Resend mapped securely through Astro's env adapter
     const apiKey = RESEND_API_KEY;
     if (!apiKey) {
-      console.error('RESEND_API_KEY is not set');
       return new Response(
-        JSON.stringify({ success: false, errors: { form: ['Email service is not configured'] } }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, error: 'Email service not configured' }),
+        { status: 500 }
       );
     }
 
     const resend = new Resend(apiKey);
 
-    const toEmail = siteConfig.email;
-    const fromEmail = 'noreply@ecoplant.uk';
-    const siteLabel = siteConfig.name;
-
-    const subject = result.data.subject
-      ? `[${siteLabel}] ${result.data.subject}`
-      : `[${siteLabel}] New contact from ${result.data.name}`;
+    // 💡 確保使用你在 Cloudflare 設定的變數，或是你 Resend 驗證過的網域
+    const fromEmail = RESEND_FROM_EMAIL || 'blog@ecoplant.uk';
 
     const { error } = await resend.emails.send({
       from: `Contact Form <${fromEmail}>`,
-      to: toEmail,
+      to: siteConfig.email,
       replyTo: result.data.email,
-      subject,
+      subject: result.data.subject || `New message from ${result.data.name}`,
       html: `
         <p><strong>Name:</strong> ${result.data.name}</p>
         <p><strong>Email:</strong> ${result.data.email}</p>
@@ -87,24 +67,14 @@ export const POST: APIRoute = async ({ request }) => {
       `,
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      return new Response(
-        JSON.stringify({ success: false, errors: { form: [error.message || 'Failed to send email'] } }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+    if (error) throw error;
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    console.error('Contact form error:', error);
-
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (err: any) {
+    console.error('Contact error:', err);
     return new Response(
-      JSON.stringify({ success: false, errors: { form: ['An unexpected error occurred'] } }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      JSON.stringify({ success: false, message: err.message || 'Server Error' }),
+      { status: 500 }
     );
   }
 };
