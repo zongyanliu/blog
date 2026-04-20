@@ -58,29 +58,28 @@ export interface SiteConfig {
 }
 
 const siteConfig: SiteConfig = {
-  name: 'Astro Rocket',
+  name: 'The AI Botanist',
   description:
-    'Astro Rocket — A production-ready Astro 6 starter with 12 beautiful themes, 57+ components, built-in i18n, dark mode and a fast, modern foundation to build anything on.',
-  url: SITE_URL || 'https://astrorocket.dev',
+    'A platform exploring the intersection of artificial intelligence and plant genomics, sharing knowledge, research, and models for computational biology.',
+  url: SITE_URL || 'https://zongyanliu.github.io/web',
   ogImage: '/og-default.svg',
-  author: 'Hans Martens',
-  email: 'hello@hansmartens.dev',
+  author: 'Zong-Yan Liu',
+  email: 'zl843@cornell.edu',
   address: {
     street: '',
-    city: 'Veghel',
-    state: '',
-    zip: '',
-    country: 'the Netherlands',
+    city: 'Ithaca',
+    state: 'NY',
+    zip: '14850',
+    country: 'United States',
   },
   socialLinks: [
-    'https://github.com/hansmartens68/Astro-Rocket',
-    'https://x.com/hansmartens_dev',
-    'https://www.linkedin.com',
-    'https://bsky.app/profile/hansmartens-online.bsky.social',
+    'https://github.com/zongyanliu',
+    'https://twitter.com/YourTwitterHandle',
+    'https://www.linkedin.com/in/zongyanliu/',
   ],
   twitter: {
-    site: 'https://x.com/hansmartens_dev',
-    creator: '@hansmartens_dev',
+    site: 'https://twitter.com/YourTwitterHandle',
+    creator: '@YourTwitterHandle',
   },
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
@@ -90,15 +89,15 @@ const siteConfig: SiteConfig = {
   blogImageOverlay: true,
   branding: {
     logo: {
-      alt: 'Astro Rocket',
+      alt: 'The AI Botanist',
       imageUrl: '/favicon.svg',
     },
     favicon: {
       svg: '/favicon.svg',
     },
     colors: {
-      themeColor: '#3b82f6',
-      backgroundColor: '#ffffff',
+      themeColor: '#22c55e', // A vibrant green
+      backgroundColor: '#0f172a', // Slate dark
     },
   },
 };
