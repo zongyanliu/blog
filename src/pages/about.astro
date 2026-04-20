@@ -11,8 +11,6 @@ import Button from '@/components/ui/form/Button/Button.astro';
 import { Hero } from '@/components/hero';
 import TypingEffect from '@/components/ui/TypingEffect.astro';
 import TechStack from '@/components/landing/TechStack.astro';
-import { Image } from 'astro:assets';
-import myAvatar from '@/assets/avatar.jpg';
 ---
 <PageLayout
   title="About Zong-Yan Liu | Neural Genomes"
@@ -47,8 +45,8 @@ import myAvatar from '@/assets/avatar.jpg';
             </h2>
           </div>
           <div class="mb-4">
-            <Image 
-              src={myAvatar} 
+            <img 
+              src="/images/avatar.jpg" 
               alt="Zong-Yan Liu" 
               class="w-48 h-48 rounded-2xl object-cover shadow-lg border-2 border-brand-500/20"
             />

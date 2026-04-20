@@ -5,14 +5,13 @@ import { glob } from 'astro/loaders';
 // Blog collection with Content Layer API
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
-  schema: ({ image }) =>
-    z.object({
+  schema: z.object({
       title: z.string().max(100),
       description: z.string().max(200),
       publishedAt: z.coerce.date(),
       updatedAt: z.coerce.date().optional(),
       author: z.string().default('Team'),
-      image: image().optional(),
+      image: z.string().optional(),
       imageAlt: z.string().optional(),
       tags: z.array(z.string()).default([]),
       svgSlug: z.string().optional(),
@@ -36,11 +35,10 @@ const pages = defineCollection({
 // Authors collection
 const authors = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/authors' }),
-  schema: ({ image }) =>
-    z.object({
+  schema: z.object({
       name: z.string(),
       bio: z.string(),
-      avatar: image().optional(),
+      avatar: z.string().optional(),
       social: z
         .object({
           twitter: z.string().optional(),
@@ -66,13 +64,12 @@ const faqs = defineCollection({
 // Projects collection — one MDX file per project
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
-  schema: ({ image }) =>
-    z.object({
+  schema: z.object({
       title: z.string(),
       description: z.string(),
       url: z.string().url().optional(),
       repo: z.string().url().optional(),
-      image: image().optional(),
+      image: z.string().optional(),
       imageAlt: z.string().optional(),
       tags: z.array(z.string()).default([]),
       featured: z.boolean().default(false),
