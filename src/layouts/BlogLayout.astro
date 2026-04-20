@@ -20,7 +20,7 @@ interface Props {
   publishedAt: Date;
   updatedAt?: Date;
   author?: string;
-  image?: ImageMetadata;
+  image?: ImageMetadata | string;
   imageAlt?: string;
   svgSlug?: string;
   tags?: string[];
@@ -40,7 +40,7 @@ const {
   slug = '',
 } = Astro.props;
 
-const ogImage = image?.src || siteConfig.ogImage;
+const ogImage = typeof image === 'string' ? image : (image?.src || siteConfig.ogImage);
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },

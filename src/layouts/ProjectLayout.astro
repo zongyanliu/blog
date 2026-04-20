@@ -20,7 +20,7 @@ interface Props {
   url?: string;
   repo?: string;
   tags?: string[];
-  image?: ImageMetadata;
+  image?: ImageMetadata | string;
   imageAlt?: string;
   related?: CollectionEntry<'projects'>[];
 }
@@ -40,7 +40,7 @@ const {
   related = [],
 } = Astro.props;
 
-const ogImage = image?.src || siteConfig.ogImage;
+const ogImage = typeof image === 'string' ? image : (image?.src || siteConfig.ogImage);
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },

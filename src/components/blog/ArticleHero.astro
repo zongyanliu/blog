@@ -12,7 +12,7 @@ interface Props {
   updatedAt?: Date;
   author?: string;
   tags?: string[];
-  image?: ImageMetadata;
+  image?: ImageMetadata | string;
   imageAlt?: string;
   svgSlug?: string;
 }
@@ -116,15 +116,24 @@ const readingTime = Math.max(1, Math.ceil(estimatedWords / wordsPerMinute));
         </div>
       ) : image ? (
         <div class="relative overflow-hidden rounded-xl border border-border shadow-2xl">
-          <Image
-            src={image}
-            alt={imageAlt || title}
-            layout="full-width"
-            widths={[640, 960, 1280, 1920]}
-            sizes="100vw"
-            class="aspect-video w-full object-cover"
-            loading="eager"
-          />
+          {typeof image === 'string' ? (
+            <img
+              src={image}
+              alt={imageAlt || title}
+              class="aspect-video w-full object-cover"
+              loading="eager"
+            />
+          ) : (
+            <Image
+              src={image}
+              alt={imageAlt || title}
+              layout="full-width"
+              widths={[640, 960, 1280, 1920]}
+              sizes="100vw"
+              class="aspect-video w-full object-cover"
+              loading="eager"
+            />
+          )}
         </div>
       ) : null}
     </div>
