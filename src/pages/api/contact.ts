@@ -4,6 +4,7 @@ import type { APIRoute } from 'astro';
 import { z } from 'astro/zod';
 import { Resend } from 'resend';
 import siteConfig from '@/config/site.config';
+import { RESEND_API_KEY } from 'astro:env/server';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100),
@@ -53,9 +54,8 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Send email via Resend
-    // Support both Vite and Node environments
-    // @ts-ignore
-    const apiKey = import.meta.env.RESEND_API_KEY || (typeof process !== 'undefined' ? process.env.RESEND_API_KEY : null);
+    // Send email via Resend mapped securely through Astro's env adapter
+    const apiKey = RESEND_API_KEY;
     if (!apiKey) {
       console.error('RESEND_API_KEY is not set');
       return new Response(
