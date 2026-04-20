@@ -58,7 +58,7 @@ export interface SiteConfig {
 }
 
 const siteConfig: SiteConfig = {
-  name: 'The AI Botanist',
+  name: 'The Algorithmic Biologist',
   description:
     'A platform exploring the intersection of artificial intelligence and plant genomics, sharing knowledge, research, and models for computational biology.',
   url: SITE_URL || 'https://zongyanliu.github.io/web',
@@ -89,7 +89,7 @@ const siteConfig: SiteConfig = {
   blogImageOverlay: true,
   branding: {
     logo: {
-      alt: 'The AI Botanist',
+      alt: 'The Algorithmic Biologist',
       imageUrl: '/favicon.svg',
     },
     favicon: {
