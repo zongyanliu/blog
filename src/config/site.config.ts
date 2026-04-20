@@ -58,8 +58,8 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'AI in Plant Biology',
-  description: 'Sharing knowledge on deep learning, foundation models, and modern plant genomics.',
+  name: 'AI in Biology',
+  description: 'Sharing knowledge on deep learning, foundation models, and modern genomics.',
   url: SITE_URL || 'https://zongyanliu.github.io/web',
   ogImage: '/og-default.svg',
   author: 'Zong-Yan Liu',
