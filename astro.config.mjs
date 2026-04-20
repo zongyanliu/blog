@@ -33,7 +33,7 @@ export default defineConfig({
       PUBLIC_GOOGLE_MAPS_API_KEY: envField.string({ context: 'client', access: 'public', optional: true, default: '' }),
       PUBLIC_CONSENT_ENABLED: envField.boolean({ context: 'client', access: 'public', optional: true, default: false }),
       PUBLIC_PRIVACY_POLICY_URL: envField.string({ context: 'client', access: 'public', optional: true, default: '' }),
-      RESEND_AUDIENCE_ID: envField.string({ context: 'server', access: 'secret', optional: true }),``
+      RESEND_AUDIENCE_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },
 

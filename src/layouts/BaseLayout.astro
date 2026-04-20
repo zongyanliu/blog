@@ -147,7 +147,7 @@ if (includeProfessionalServiceSchema) {
             } else {
               el.classList.add('dark');
             }
-          } catch (_) { /* ignored */ }
+          } catch { /* ignored */ }
 
           try {
             // Color theme — persisted in sessionStorage so it resets to sky on every new visit
@@ -155,7 +155,7 @@ if (includeProfessionalServiceSchema) {
             if (saved && COLOR_THEMES.indexOf(saved) !== -1) {
               el.setAttribute('data-theme', saved);
             }
-          } catch (_) { /* ignored */ }
+          } catch { /* ignored */ }
         }
 
         applyTheme(document.documentElement);
