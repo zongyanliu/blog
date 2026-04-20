@@ -57,10 +57,9 @@ export interface SiteConfig {
   };
 }
 
-const siteConfig: SiteConfig = {
-  name: 'The Algorithmic Biologist',
-  description:
-    'A platform exploring the intersection of artificial intelligence and plant genomics, sharing knowledge, research, and models for computational biology.',
+export const siteConfig: SiteConfig = {
+  name: 'Synapse & Sequence',
+  description: 'Advancing Biology through Artificial Intelligence',
   url: SITE_URL || 'https://zongyanliu.github.io/web',
   ogImage: '/og-default.svg',
   author: 'Zong-Yan Liu',
@@ -89,7 +88,7 @@ const siteConfig: SiteConfig = {
   blogImageOverlay: true,
   branding: {
     logo: {
-      alt: 'The Algorithmic Biologist',
+      alt: 'The AI Botanist',
       imageUrl: '/favicon.svg',
     },
     favicon: {
