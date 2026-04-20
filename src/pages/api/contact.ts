@@ -16,6 +16,8 @@ const contactSchema = z.object({
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const jsonHeaders = { 'Content-Type': 'application/json' };
+
     // 💡 優化：自動判斷是 JSON 還是 FormData
     const contentType = request.headers.get('content-type');
     let data: Record<string, unknown>;
@@ -32,20 +34,20 @@ export const POST: APIRoute = async ({ request }) => {
     if (!result.success) {
       return new Response(
         JSON.stringify({ success: false, errors: result.error.flatten().fieldErrors }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: jsonHeaders }
       );
     }
 
     // Bot 檢測
     if (result.data.honeypot) {
-      return new Response(JSON.stringify({ success: true }), { status: 200 });
+      return new Response(JSON.stringify({ success: true }), { status: 200, headers: jsonHeaders });
     }
 
     const apiKey = RESEND_API_KEY;
     if (!apiKey) {
       return new Response(
         JSON.stringify({ success: false, error: 'Email service not configured' }),
-        { status: 500 }
+        { status: 500, headers: jsonHeaders }
       );
     }
 
@@ -69,13 +71,13 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (error) throw error;
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return new Response(JSON.stringify({ success: true }), { status: 200, headers: jsonHeaders });
   } catch (err: unknown) {
     console.error('Contact error:', err);
     const errorMessage = err instanceof Error ? err.message : 'Server Error';
     return new Response(
       JSON.stringify({ success: false, message: errorMessage }),
-      { status: 500 }
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 };
