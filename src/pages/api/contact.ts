@@ -18,7 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     // 💡 優化：自動判斷是 JSON 還是 FormData
     const contentType = request.headers.get('content-type');
-    let data: any;
+    let data: Record<string, unknown>;
 
     if (contentType?.includes('application/json')) {
       data = await request.json();
@@ -70,10 +70,11 @@ export const POST: APIRoute = async ({ request }) => {
     if (error) throw error;
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Contact error:', err);
+    const errorMessage = err instanceof Error ? err.message : 'Server Error';
     return new Response(
-      JSON.stringify({ success: false, message: err.message || 'Server Error' }),
+      JSON.stringify({ success: false, message: errorMessage }),
       { status: 500 }
     );
   }

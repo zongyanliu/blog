@@ -8,9 +8,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // 關鍵設定 1：使用混合模式。
-  // 這讓你的網站大多數頁面維持靜態，只有 API 路由是動態的。
-  output: 'hybrid', trailingSlash: 'never',
+  // 關鍵設定 1：使用靜態模式。
+  // Astro 已移除 'hybrid' 模式，改用 'static' 作為預設。
+  output: 'static', trailingSlash: 'never',
 
   // 關鍵設定 2：安裝 Cloudflare 適配器
   adapter: cloudflare(),

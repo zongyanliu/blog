@@ -5,16 +5,14 @@ import Button from '@/components/ui/form/Button/Button.astro';
 import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
-import BlogCard from '@/components/blog/BlogCard.astro';
 import { getCollection } from 'astro:content';
-import siteConfig from '@/config/site.config';
 
 const projectItems = await getCollection('projects');
 const featuredProjects = projectItems
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 4);
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
+const _posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => {
     if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
     return b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf();
